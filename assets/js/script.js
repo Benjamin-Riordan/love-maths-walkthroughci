@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded",function(){
 
     for (let button of buttons){
         button.addEventListener("click",function() {
-            if(this.getAttribute("data-type" === "submit")){
-                alert("you clicked submit!");}
+            if(this.getAttribute("data-type") === "submit"){
+                checkAnswer()}
             else{
                 let gameType = this.getAttribute("data-type");
                 alert(`you clicked ${gameType}`);
@@ -33,19 +33,48 @@ function runGame(gameType){
 }
 
 
-function checkAnswer(){
+function checkAnswer(){ 
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer()
+    let isCorrect = userAnswer === calculatedAnswer[0]
+
+    if (isCorrect){ 
+        alert("hey Well done you got the right answer");
+        icrementScore()
+    }else{
+        alert(`HRD LUCK BUT THE ANSWER IS ${calculatedAnswer[0]} try again`);
+        incrementWrongAnswer()
+    }
+
+    runGame(calculatedAnswer[1])
     
 }
 
 function calculateCorrectAnswer(){
+    let operand1 = parseInt(document.getElementById("operand1").innerText);
+    let operand2 = parseInt(document.getElementById("operand2").innerText);
+    let operator = (document.getElementById("operator").innerText);
     
+    if(operator === "+"){
+        return [operand1 + operand2 ,"addition"]
+    } else{
+        alert(`Unimplented operator ${operator}`);
+        throw `Unimplented operator ${operator}.Aborting1`
+    }
+
 }
 
 function icrementScore(){
+
+    let oldScore = parseInt(document.getElementById("score").innerText)
+    document.getElementById("score").innerText = ++oldScore 
+    
     
 }
 
 function incrementWrongAnswer(){
+    let oldScore = parseInt(document.getElementById("incorrect").innerText)
+    document.getElementById("incorrect").innerText = ++oldScore
     
 }
 
